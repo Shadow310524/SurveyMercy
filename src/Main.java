@@ -7,17 +7,18 @@ public class Main {
         Scanner inp=new Scanner(System.in);
         UserRepository repo=new UserDirectory();
         UserService userService=new UserService(repo);
-        boolean current=true;
+        SurveyRepository repository=new SurveyDirectory();
+        SurveyService surveyService=new SurveyService(repository,repo);
+        boolean current=false;
         int val;
         String name;
         String password;
         String current_user="";
+        String title;
         while(true){
-            while(current){
             System.out.println("1)Add User");
             System.out.println("2)Login");
-            System.out.println("3)Logout");
-            System.out.println("4)Exit");
+            System.out.println("3)Exit");
             val=inp.nextInt();
             inp.nextLine();
             switch (val) {
@@ -35,21 +36,54 @@ public class Main {
                     password=inp.nextLine();
                     if(userService.check(name,password)) {
                         current_user=name;
-                        current = false;
+                        current = true;
                     }
                     break;
                 case 3:
-                    System.out.println("Logging out!!");
-                    current=true;
-                    break;
-                case 4:
                     System.exit(0);
                     break;
                 default:
                     System.out.println("Bye byee");
                     break;
             }
-        }
+            while(current){
+                System.out.println("Hello "+current_user);
+                System.out.println("1)Create Survey");
+                System.out.println("2)View Surveys");
+                System.out.println("3)View All Surveys");
+                System.out.println("4)Respond to Survey");
+                System.out.println("5)Logout");
+                val= inp.nextInt();
+                inp.nextLine();
+                switch (val){
+                    case 1:
+                        System.out.println("Title");
+                        title= inp.nextLine();
+                        if(surveyService.addSurvey(current_user,title)){
+                            System.out.println("Survey added");
+                        }
+                        System.out.println("Survey not added");
+                        break;
+                    case 2:
+                        System.out.println("---------------------------------------");
+                        System.out.println("Survey List -> "+current_user);
+                        surveyService.viewSurveys(current_user);
+                        System.out.println("---------------------------------------");
+                        break;
+//                    case 3:
+//                        System.out.println("---------------------------------------");
+//                        System.out.println("Displaying Survey List of all users");
+//
+//                        surveyService.viewSurveys();
+//                        System.out.println("---------------------------------------");
+//                        break;
+                    case 5:
+                        System.out.println("Logging out!!");
+                        current=false;
+                        break;
+                }
             }
+        }
+
     }
 }
