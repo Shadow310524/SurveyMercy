@@ -1,18 +1,17 @@
 import java.util.List;
 
 public class Survey {
-    private String id;
+    private int id;
     private String title;
     private String createdBy;
-//    private List<Question> questions;
 
-    public Survey(String id, String currentUser, String title) {
+    public Survey(int id, String currentUser, String title) {
         this.id=id;
         this.createdBy=currentUser;
         this.title=title;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

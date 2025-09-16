@@ -1,5 +1,8 @@
 import java.util.*;
 public class Main {
+    static int survey_id=1;
+    static int question_id=1;
+    static int answer_id=1;
     public static void main(String[] args) {
         System.out.println("------------------------");
         System.out.println("User Registration page");
@@ -9,6 +12,10 @@ public class Main {
         UserService userService=new UserService(repo);
         SurveyRepository repository=new SurveyDirectory();
         SurveyService surveyService=new SurveyService(repository,repo);
+        QuestionRepository questionRepository=new QuestionDirectory();
+        QuestionService questionService=new QuestionService(repository,repo,questionRepository);
+        AnswerRepository answerRepository=new AnswerDirectory();
+        AnswerService answerService=new AnswerService(repository,repo,questionRepository,answerRepository);
         boolean current=false;
         int val;
         String name;
@@ -83,7 +90,7 @@ public class Main {
                         System.out.println("---------------------------------------");
                         surveyList=surveyService.viewSurveys();
                         for(Survey survey:surveyList){
-                            System.out.println(survey.getId()+" "+survey.getCreatedBy()+" "+survey.getTitle());
+                            System.out.println(survey.getId()+")"+survey.getCreatedBy()+" "+survey.getTitle());
                         }
                         System.out.println("---------------------------------------");
                         break;
@@ -94,6 +101,5 @@ public class Main {
                 }
             }
         }
-
     }
 }
