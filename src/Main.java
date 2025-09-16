@@ -15,6 +15,7 @@ public class Main {
         String password;
         String current_user="";
         String title;
+        List<Survey> surveyList;
         while(true){
             System.out.println("1)Add User");
             System.out.println("2)Login");
@@ -62,21 +63,30 @@ public class Main {
                         if(surveyService.addSurvey(current_user,title)){
                             System.out.println("Survey added");
                         }
-                        System.out.println("Survey not added");
+                        else
+                            System.out.println("Survey not added");
                         break;
                     case 2:
                         System.out.println("---------------------------------------");
-                        System.out.println("Survey List -> "+current_user);
-                        surveyService.viewSurveys(current_user);
+                        System.out.println("Displaying Survey List -> "+current_user);
+                        System.out.println("---------------------------------------");
+                        surveyList=surveyService.viewSurveys(current_user);
+                        if(surveyList!=null)
+                            for(Survey survey:surveyList){
+                                System.out.println(survey.getId()+" "+survey.getTitle());
+                            }
                         System.out.println("---------------------------------------");
                         break;
-//                    case 3:
-//                        System.out.println("---------------------------------------");
-//                        System.out.println("Displaying Survey List of all users");
-//
-//                        surveyService.viewSurveys();
-//                        System.out.println("---------------------------------------");
-//                        break;
+                    case 3:
+                        System.out.println("---------------------------------------");
+                        System.out.println("Displaying Survey List of all users");
+                        System.out.println("---------------------------------------");
+                        surveyList=surveyService.viewSurveys();
+                        for(Survey survey:surveyList){
+                            System.out.println(survey.getId()+" "+survey.getCreatedBy()+" "+survey.getTitle());
+                        }
+                        System.out.println("---------------------------------------");
+                        break;
                     case 5:
                         System.out.println("Logging out!!");
                         current=false;

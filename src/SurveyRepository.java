@@ -1,5 +1,7 @@
 import java.util.List;
 
 public interface SurveyRepository {
-    boolean addSurvey(Survey survey);
+    void addSurvey(String username,Survey survey);
+    List<Survey> viewAllSurveys();
+    List<Survey> viewAllSurveys(String username);
 }

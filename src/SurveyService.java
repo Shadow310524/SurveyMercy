@@ -2,8 +2,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class SurveyService {
-    private SurveyRepository surveyRepository;
-    private UserRepository userRepository;
+    private final SurveyRepository surveyRepository;
+    private final UserRepository userRepository;
 
     public SurveyService(SurveyRepository surveyRepository,UserRepository userRepository){
         this.surveyRepository=surveyRepository;
@@ -15,21 +15,22 @@ public class SurveyService {
         Survey survey=new Survey(id,currentUser,title);
         Users user=userRepository.checkuser(currentUser);
         if(user!=null){
-        user.getSurveys().add(survey);
-        surveyRepository.addSurvey(survey);
+        surveyRepository.addSurvey(currentUser,survey);
         return true;
         }
         return false;
     }
 
-    public void viewSurveys(String currentUser) {
+    public List<Survey> viewSurveys(String currentUser) {
         Users user=userRepository.checkuser(currentUser);
         if(user!=null){
-            List<Survey> surveyList=user.getSurveys();
-            for(Survey survey:surveyList){
-                System.out.println(survey.getId()+" "+survey.getCreatedBy()+" "+survey.getTitle());
-            }
+            List<Survey> surveyList=surveyRepository.viewAllSurveys(currentUser);
+            if(surveyList!=null)
+                return surveyList;
         }
-
+        return null;
+    }
+    public List<Survey> viewSurveys(){
+        return surveyRepository.viewAllSurveys();
     }
 }
