@@ -5,10 +5,12 @@ import java.util.Map;
 
 public class SurveyDirectory implements SurveyRepository{
     private Map<String,List<Survey>> surveys=new HashMap<>();
+    private int sid=1;
 
     @Override
     public void addSurvey(String username,Survey survey) {
             surveys.putIfAbsent(username,new ArrayList<>());
+            survey.setId(sid++);
             surveys.get(username).add(survey);
 
     }
@@ -23,5 +25,6 @@ public class SurveyDirectory implements SurveyRepository{
     public List<Survey> viewAllSurveys(String username) {
         return surveys.get(username);
     }
+
 
 }

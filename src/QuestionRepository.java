@@ -1,3 +1,6 @@
+import java.util.List;
+
 public interface QuestionRepository {
-    void addQuestion(String type, Question question);
+    void addQuestion(Question question);
+    List<Question> displayQuestions();
 }

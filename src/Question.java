@@ -1,24 +1,24 @@
 import java.util.List;
 
 public class Question {
-    private String id;
-    private String surveyId;
+    private int id;
+    private int surveyId;
     private String text;
     private QuestionTypes type;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getSurveyId() {
+    public int getSurveyId() {
         return surveyId;
     }
 
-    public void setSurveyId(String surveyId) {
+    public void setSurveyId(int surveyId) {
         this.surveyId = surveyId;
     }
 

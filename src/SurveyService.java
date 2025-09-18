@@ -11,12 +11,10 @@ public class SurveyService {
     }
 
     public boolean addSurvey(String currentUser, String title) {
-        int id= Main.survey_id;
-        Survey survey=new Survey(id,currentUser,title);
+        Survey survey=new Survey(0,currentUser,title);
         Users user=userRepository.checkuser(currentUser);
         if(user!=null){
         surveyRepository.addSurvey(currentUser,survey);
-        Main.survey_id++;
         return true;
         }
         return false;

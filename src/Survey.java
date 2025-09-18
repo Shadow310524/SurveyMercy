@@ -23,5 +23,7 @@ public class Survey {
         return title;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }
