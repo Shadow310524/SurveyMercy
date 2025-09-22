@@ -17,11 +17,12 @@ public class Main {
         AnswerRepository answerRepository=new AnswerDirectory();
         AnswerService answerService=new AnswerService(repository,repo,questionRepository,answerRepository);
         boolean current=false;
-        int val,sid;
+        int val,sid,qid;
         String name;
         String password;
         String current_user="";
-        String title,type;
+        String title,type,answer;
+        char option;
         List<Survey> surveyList;
         while(true){
             System.out.println("1)Add User");
@@ -55,7 +56,9 @@ public class Main {
                     break;
             }
             while(current){
+                System.out.println("---------------------------------------");
                 System.out.println("Hello "+current_user);
+                System.out.println("---------------------------------------");
                 System.out.println("1)Create Survey");
                 System.out.println("2)View Surveys");
                 System.out.println("3)Add Questions");
@@ -104,30 +107,48 @@ public class Main {
                         System.out.println("Displaying Survey List of all users");
                         System.out.println("---------------------------------------");
                         surveyList=surveyService.viewSurveys();
-                        for(Survey survey:surveyList){
-                            System.out.println(survey.getId()+")"+survey.getCreatedBy()+" "+survey.getTitle());
+                        if(surveyList!=null) {
+                            for (Survey survey : surveyList) {
+                                System.out.println(survey.getId() + ") " + survey.getCreatedBy() + "->" + survey.getTitle());
+                            }
+                        }
+                        else {
+                            System.out.println("No Survey Available");
                         }
                         System.out.println("---------------------------------------");
                         break;
                     case 5:
-                        System.out.println("---------------------------------------");
-                        System.out.println("Displaying Questions");
-                        System.out.println("---------------------------------------");
                         List<Question> questionList=questionService.displayQuestion();
-                        for(Question question:questionList){
-                            System.out.println(question.getSurveyId());
-                            if(question.getType()==QuestionTypes.TEXT) {
-                                System.out.println(question.getId() + ")" + question.getText());
-                            }
-                            else{
-                                int idx=0;
-                                System.out.println(question.getId() + ")" + question.getText());
-                                for(String opt:question.getOptions()){
-                                    System.out.println((char)(idx+'a')+")"+opt);
-                                    idx++;
+                        if(questionList!=null) {
+                            System.out.println("---------------------------------------");
+                            System.out.println("Displaying Questions");
+                            System.out.println("---------------------------------------");
+                            for (Question question : questionList) {
+                                System.out.println(question.getSurveyId());
+                                if (question.getType() == QuestionTypes.TEXT) {
+                                    System.out.println(question.getId() + ")" + question.getText());
+                                } else {
+                                    int idx = 0;
+                                    System.out.println(question.getId() + ")" + question.getText());
+                                    for (String opt : question.getOptions()) {
+                                        System.out.println((char) (idx + 'a') + ")" + opt);
+                                        idx++;
+                                    }
                                 }
                             }
                         }
+                        else{
+                            System.out.println("No Questions Available");
+                        }
+                        break;
+                    case 6:
+                        System.out.println("---------------------------------------");
+                        System.out.println("Enter Survey ID to respond");
+                        System.out.println("---------------------------------------");
+                        sid=inp.nextInt();
+                        inp.nextLine();
+                        answerService.respondToSurvey(current_user,sid,inp);
+                        System.out.println("---------------------------------------");
                         break;
                     case 7:
                         System.out.println("Logging out!!");

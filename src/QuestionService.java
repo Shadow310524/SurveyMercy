@@ -40,8 +40,8 @@ public class QuestionService {
                     options.add(opt);
                 }
                 question_builder.setOptions(options);
-                questionRepository.addQuestion(question_builder);
             }
+            questionRepository.addQuestion(question_builder);
             return true;
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid type! Please enter TEXT or MCQ.");
